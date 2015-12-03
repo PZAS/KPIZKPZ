@@ -1,0 +1,25 @@
+<template name="booksList">
+   {{#each books}}
+    <div class="col-xs-4 book-item {{category}}" id="bookadd_{{id}}">
+               <div class="book">
+                   <img src="{{img}}" alt="">
+               </div>
+               <div class="content">
+                   <div class="title"><span>{{title}}</span></div>
+                   <div class="author"><span><i class="fa fa-user"></i>{{author}}</span></div>
+                   <div class="pages"><span><i class="fa fa-book"></i>{{pages}} pages</span></div>
+                   <div class="language"><span><i class="fa fa-language"></i>{{language}}</span></div>
+                   <div class="show-description" onclick="showDescription(desk_{{id}})"><i class="fa fa-file-text-o"></i>Read description</div>
+                   <button class="read"><i class="fa fa-eye"></i>Read</button>
+                   <button class="download"><i class="fa fa-download"></i>Download</button>
+                   <div class="description" id="desk_{{id}}">
+                       <div class="description-content">
+                           <p>{{description}}</p>
+                           <div class="close-description fa fa-close" onclick="closeDescription()"></div>
+                       </div>
+                   </div>
+               </div>
+               <div class="add-to-enabled"><i class="fa fa-plus" id="add_{{id}}" onclick="changeIcon('add_{{id}}')"></i></div>
+           </div>
+    {{/each}}
+</template>

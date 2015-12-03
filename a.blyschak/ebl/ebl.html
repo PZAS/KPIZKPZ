@@ -1,0 +1,193 @@
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Freelib</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lobster|Comfortaa:400,300,700&subset=latin,cyrillic,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+  </head>
+
+<body>
+   <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+          <div class="navbar-header">
+              <a class="navbar-brand"><img src="/img/books.png" alt=""><span>Freelib</span><img src="/img/lamp.png" alt=""></a>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu">
+                 <span class="sr-only">show navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+          </div>
+          <div class="collapse navbar-collapse" id="responsive-menu">
+              <ul class="nav navbar-nav">
+                  <li><a href="#" onclick="showAll()">All books</a></li>
+                  <li><a href="#" onclick="showFavorite()">Favorite</a></li>
+                  <li><a href="#" onclick="showCategory()">Categories</a></li>
+                  <script>
+                      function showCategory(){
+                          if (!$('#categories').is(":visible")){ $('#categories').show(); }
+                          else { $('#categories').hide(); }
+                      }
+                      (function() {
+                          "use strict";
+                          var toggles = document.querySelectorAll(".sidebar");
+                          for (var i = toggles.length - 1; i >= 0; i--) {
+                            var toggle = toggles[i];
+                            toggleHandler(toggle);
+                          };
+                          function toggleHandler(toggle) {
+                            toggle.addEventListener( "click", function(e) {
+                              e.preventDefault();
+                              (this.classList.contains("active") === true) ? this.classList.remove("active") : this.classList.add("active");
+                            });
+                          }
+                        })();
+                      function changeIcon(icon_id){
+                          if(document.getElementById('book'+icon_id).classList.contains('enabled-book')){
+                              if(document.getElementById(icon_id).classList.contains('favorite')){
+                                  document.getElementById(icon_id).classList.add('yellow-color');
+                                  document.getElementById(icon_id).classList.add('fa-star');
+                                  document.getElementById(icon_id).classList.remove('fa-check');
+                                  document.getElementById(icon_id).classList.remove('green-color');
+                                  document.getElementById('book'+icon_id).classList.remove('enabled-book');
+                              } else {
+                                  document.getElementById(icon_id).classList.add('fa-plus');
+                                  document.getElementById(icon_id).classList.remove('fa-check');
+                                  document.getElementById(icon_id).classList.remove('green-color');
+                                  document.getElementById('book'+icon_id).classList.remove('enabled-book');
+                              }
+                          } else {
+                          document.getElementById(icon_id).classList.remove('fa-plus');
+                          document.getElementById(icon_id).classList.remove('yellow-color');
+                          document.getElementById(icon_id).classList.add('fa-check');
+                          document.getElementById(icon_id).classList.add('green-color');
+                          document.getElementById('book'+icon_id).classList.add('enabled-book');
+                          }
+                      }
+                      function showDescription(desk_id){
+                          closeDescription();
+                          $(desk_id).show();
+                      }
+                      function closeDescription(){
+                          $('.description').hide();
+                      }
+                      function showFavoriteCaption(){
+                          $('.favorite-caption').show();
+                      }
+                      function showRemoveCaption(){
+                          $('.remove-caption').show();
+                      }
+                      function closeCaption(){
+                          $('.favorite-caption').hide();
+                          $('.remove-caption').hide();
+                      }
+                      function moveSideBar(){
+                          if(document.getElementById('sidebar').classList.contains('move-up')){
+                              document.getElementById('sidebar').classList.remove('move-up');
+                              document.getElementById('sidebar').classList.add('move-down');
+                          } else {
+                              document.getElementById('sidebar').classList.remove('move-domn');
+                              document.getElementById('sidebar').classList.add('move-up');
+                          }
+                      }
+                      function addToFavorite(){
+                          $('.enabled-book').removeClass("enabled-book").addClass("favorite-book");
+                          $('.fa-check').removeClass("fa-check green-color").addClass("fa-star yellow-color favorite");
+                      }
+                      function removeFromSearch(){
+                          $('.enabled-book').hide();
+                      }
+                      function moveUp(){
+                          var height = parseInt($('.book-item').css('top'), 10);
+                          height -= 560;
+                          if (upCheck()){
+                                $('.book-item').css('top', height + 'px');
+                          }
+                      }
+                      function moveDown(){
+                          var height = parseInt($('.book-item').css('top'), 10);
+                          height += 560;
+                          if (downCheck()){
+                                $('.book-item').css('top', height + 'px');
+                          }
+                      }
+                      function showFavorite(){
+                          $(".book-item:not(.favorite-book)").hide();
+                      }
+                      function showAll(){
+                          $(".book-item").show();
+                      }
+                      function showOwnCategory(category){
+                          $(".book-item").hide();
+                          $("."+category).show();
+                      }
+                      function downCheck(){
+                          if ( parseInt($('.book-item').css('top'), 10) >= 0) {
+                              return false;
+                          } else { return true; }
+                      }
+                      function upCheck(){
+                          var top = (Math.ceil($(".book-item:visible").length/3)*280-560)*(-1);
+                          var border = parseInt($('.book-item').css('top'), 10);
+                          if ( top >= border ) {
+                              return false; 
+                          } else { return true; }
+                      }
+                  </script>
+              </ul>
+          </div>
+          <!--<div class="search"><label class="glyphicon glyphicon-search" aria-hidden="true" for="search-box"><input type="text" id="search-box" class="search-input" placeholder="search"></label></div> -->
+          <div class="sidebar sidebar-close" onclick="moveSideBar()"><span></span></div>
+      </div>
+  </div>
+    <div class="container main">
+      <div class="left-nav">
+          <div class="nav-up" onclick="moveDown()"><i class="fa fa-arrow-circle-up fa-4x"></i></div>
+          <div class="nav-down" onclick="moveUp()"><i class="fa fa-arrow-circle-down fa-4x"></i></div>
+      </div>
+      <div class="right-menu move-up" id="sidebar">
+         <div class="right-menu-mask">
+             <div class="add-to-favorite fa fa-bookmark fa-4x" onmousemove="showFavoriteCaption()" onmouseout="closeCaption()" onclick="addToFavorite()"></div>
+             <div class="favorite-caption">Add to favorite</div>
+             <div class="remove-from-search fa fa-trash-o fa-4x" onmousemove="showRemoveCaption()" onmouseout="closeCaption()" onclick="removeFromSearch()"></div>
+             <div class="remove-caption">Remove from search</div>
+          </div>
+      </div>
+       <div class="container">
+          <div class="row books">
+           {{> booksList }}
+           </div>
+       </div>
+        <div class="categories" id="categories">
+            <ul>
+                <li onclick="showOwnCategory('adventures')">Adventures</li>
+                <li onclick="showOwnCategory('childrens')">Children's</li>
+                <li onclick="showOwnCategory('detective')">Detective</li>
+                <li onclick="showOwnCategory('drama')">Drama</li>
+                <li onclick="showOwnCategory('education')">Education</li>
+                <li onclick="showOwnCategory('erotic')">Erotic</li>
+                <li onclick="showOwnCategory('fantasy')">Fantasy</li>
+                <li onclick="showOwnCategory('historical')">Historical</li>
+                <li onclick="showOwnCategory('horror')">Horror</li>
+                <li onclick="showOwnCategory('humor')">Humor</li>
+                <li onclick="showOwnCategory('military')">Military</li>
+                <li onclick="showOwnCategory('medicine')">Medicine</li>
+                <li onclick="showOwnCategory('mythology')">Mythology</li>
+                <li onclick="showOwnCategory('poetry')">Poetry</li>
+                <li onclick="showOwnCategory('roman')">Roman</li>
+                <li onclick="showOwnCategory('politics')">Politics</li>
+                <li onclick="showOwnCategory('psyhology')">Psyhology</li>
+                <li onclick="showOwnCategory('sci-fi')">Sci-fi</li>
+                <li onclick="showOwnCategory('tales')">Tales</li>
+                <li onclick="showOwnCategory('thriller')">Thriller</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </body>
